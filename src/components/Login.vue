@@ -1,5 +1,5 @@
 <template>
-  <div class="row mt-3">
+  <div>
     <div class="col-md-12 col-lg-12">
       <div class="card">
         <div class="card-body">
@@ -18,16 +18,55 @@
         </div>
       </div>
     </div>
+    <div class="widths">
+      <!-- <Slider :items="items" :cname="slider" :options='options' /> -->
+      <Slider :items="items" :cname="slider"/>
+    </div>
   </div>
 </template>
 
 <script>
+import slider2 from '../assets/pizza.jpg'
+import Slider from './public/slider.vue'
     export default{
         data(){
           return{
             email:'',
-            password:''
+            password:'',
+            slider:"slider",
+            // options:{
+              // loop:true,
+              // autoplay: {
+              //   delay: 2000,
+              //   stopOnLastSlide: false,
+              //   disableOnInteraction: true,
+              // },
+              // effect:'cube',
+  //             pagination:{
+  //               el:".swiper-pagination",
+  //               paginationClickable:true,
+  //               paginationBulletRender: function (index, className) {
+  //     return '<span class="' + className + '">' + (index + 1) + '</span>';
+  // }
+  //             },
+            // },
+            items   : [{
+                    href    : "home",
+                    src     : slider2
+                },{
+                    href    : "home",
+                    src     : slider2
+                },{
+                    href    : "home",
+                    src     : slider2
+                },{
+                    href    : "home",
+                    src     : slider2
+                }],
           }
+        },
+        components:{
+          Slider
         },
         methods:{
           onSubmit(){
@@ -60,5 +99,18 @@
 </script>
 
 <style>
+  .widths{
+    width: 1000px;
+    display: inline-block;
+  }
+  .slider{
+    width: 700px;
+    height: 400px;
     
+    margin: 50px auto;
+  }
+  .slider img{
+    width: 100%;
+    height: 400px;
+  }
 </style>
