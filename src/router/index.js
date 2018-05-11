@@ -1,91 +1,55 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home'
-import Menu from '../components/Menu'
-import Admin from '../components/Admin'
-import About from '../components/about/About'
-import Login from '../components/Login'
-import Register from '../components/Register'
+
+// 一级路由
+import Home from '../components/home/Home.vue'
+import ServiceDelivery from '../components/serviceDelivery/serviceDelivery.vue'
 
 // 二级路由
-import Contact from '../components/about/Contact'
-import Delivery from '../components/about/Delivery'
-import History from '../components/about/History'
-import OrderingGuide from '../components/about/OrderingGuide'
+import ServiceQuery from '../components/serviceDelivery/children/serviceQuery.vue'
+import ServiceManagement from '../components/serviceDelivery/children/serviceManagement.vue'
 
 // 三级路由
-import Phone from '../components/about/contact/Phone'
-import PhoneName from '../components/about/contact/PhoneName'
+import ServiceQuery1 from '../components/serviceDelivery/children/serviceQuery/serviceQuery1.vue'
+import ServiceQuery2 from '../components/serviceDelivery/children/serviceQuery/serviceQuery2.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    // 一级路由
-    {path: '/',
-      name: 'home',
-      // 路由复用
-      components: {
-        default: Home,
-        'orderingGuide': OrderingGuide,
-        'history': History,
-        'delivery': Delivery
-      }
-    },
-    {path: '/menu', name: 'menu', component: Menu},
-    {path: '/admin',
-      name: 'admin',
-      component: Admin
-      // 路由独享守卫
-      // beforeEnter: (to, from, next) => {
-      // 判断store.getters.isLogin === false
-      //   let isLogin = false
-      //   if (isLogin) {
-      //     next()
-      //   } else {
-      //     alert('还没有登陆，请先登录')
-      //     next('/login')
-      //   }
-      // }
-    },
-    {path: '/about',
-      name: 'about',
-      redirect: '/about/history',
-      component: About,
+    {path: '/', name: 'home', component: Home},
+    {path: '/serviceDelivery',
+      redirect: '/serviceDelivery/serviceQuery',
+      name: 'serviceDelivery',
+      component: ServiceDelivery,
+      // serviceDelivery的子路由
       children: [
-      // 二级路由
-      // 路由path可以不写/about,显示为localhost:8080/contact
-      // {path : "/contact" , name : "contact" , component : Contact},
-        {path: '/about/contact',
-          name: 'contact',
-          redirect: '/about/contact/phonename',
-          component: Contact,
+        {path: '/serviceDelivery/serviceQuery',
+          name: 'serviceQuery',
+          component: ServiceQuery,
           children: [
-            // 三级路由
-            {path: '/about/contact/phone', name: 'phone', component: Phone},
-            {path: '/about/contact/phonename', name: 'phonename', component: PhoneName}
-          ]},
-        {path: '/about/delivery', name: 'delivery', component: Delivery},
-        {path: '/about/history', name: 'history', component: History},
-        {path: '/about/orderingGuide', name: 'orderingGuide', component: OrderingGuide}
-      ]},
-    {path: '/login', name: 'login', component: Login},
-    {path: '/register', name: 'register', component: Register},
+            {path: '/serviceDelivery/serviceQuery/serviceQuery1', name: 'serviceQuery1', component: ServiceQuery1},
+            {path: '/serviceDelivery/serviceQuery/serviceQuery2', name: 'serviceQuery2', component: ServiceQuery2}
+          ]
+        },
+        {path: '/serviceDelivery/serviceManagement', name: 'serviceManagement', component: ServiceManagement}
+      ]
+    },
     // 当用户输入的路径不存在时，利用redirect会跳转到主页
     {path: '*', redirect: '/'}
   ],
-  mode: 'hash',
-  scrollBehavior: (to, from, savedPosition) => {
-    // return {x: 0, y: 100}
-    // return {selector: '.btn'}
-    // if (savedPosition) {
-    //   return {
-    //     savedPosition
-    //   }
-    // } else {
-    //   return {
-    //     x: 0, y: 0
-    //   }
-    // }
-  }
+  mode: 'hash'
+  // scrollBehavior: (to, from, savedPosition) => {
+  // return {x: 0, y: 100}
+  // return {selector: '.btn'}
+  // if (savedPosition) {
+  //   return {
+  //     savedPosition
+  //   }
+  // } else {
+  //   return {
+  //     x: 0, y: 0
+  //   }
+  // }
+  // }
 })

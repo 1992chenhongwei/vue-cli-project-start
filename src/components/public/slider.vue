@@ -34,6 +34,7 @@
                         //可选选项，自动滑动
                         autoplay:true,
                         loop:true,
+                        effect:'fade',
                         pagination:{
                             el:".swiper-pagination",
                         },

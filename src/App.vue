@@ -1,32 +1,20 @@
 <template>
   <div id="app">
-      <div class="container">
-          <app-header></app-header>
-      </div>
-      <div class="container">
+      <!-- <div class="w"> -->
           <router-view></router-view>
-      </div>
-      <div class="container">
-          <div class="row">
-              <div class="col-sm-12 col-md-4">
-                  <router-view name="orderingGuide"></router-view>
-              </div>
-              <div class="col-sm-12 col-md-4">
-                  <router-view name="history"></router-view>
-              </div>
-              <div class="col-sm-12 col-md-4">
-                  <router-view name="delivery"></router-view>
-              </div>
-          </div>
-      </div>
+      <!-- </div> -->
   </div>
 </template>
 
-<script>
-import Header from './components/Header.vue'
+<script>    
+// import Header from './components/public/Header.vue'
+// import Navbar from './components/public/Nav.vue'
+// import Footer from './components/public/Footer.vue'
 export default {
   components:{
-      "app-header":Header,
+    //   "app-header":Header,
+    //   "nav-bar":Navbar,
+    //   Footer
   },
   data(){
       return{}

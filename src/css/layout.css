@@ -10,7 +10,7 @@
     padding: 0;
 }
 body{
-    background: #f6f6f6;
+    background: #FFFFFF;
     font: 12px/1.5 tahoma, arial, Microsoft YaHei, sans-serif;
 }
 li{
@@ -28,11 +28,13 @@ input[type='checkbox']{
 }
 
 /* 定宽布局 */
-.w{
-    width: 1080px;
+.w{ 
+    width: 90%;
     margin: 0 auto;
-    position: relative;
-    overflow: hidden;
+    /* display: flex; */
+    /* display: inline-block; */
+    /* position: relative; */
+    /* overflow: hidden; */
 }
 
 /* panel */
@@ -42,11 +44,8 @@ input[type='checkbox']{
     background: #fff;
 }
 .panel .panel-title{
-    padding: 10px;
     font-size: 14px;
     color: #666;
-    font-weight: bold;
-    border-bottom: 1px solid #eee;
 }
 .panel .panel-body{
     padding: 10px;
