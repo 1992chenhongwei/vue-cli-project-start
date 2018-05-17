@@ -4,7 +4,8 @@
     <nav-bar></nav-bar>
     <Hslider/>
     <Footer/>
-    <Calendar1/>
+    <!-- <Calendar1/> -->
+    <el-button type="primary" :loading="loadbtn" @click="changeBtn()">提交</el-button>
   </div>
 </template>
 
@@ -17,7 +18,7 @@ import Calendar1 from '../public/Calendar.vue'
 export default {
   data(){
       return{
-
+        loadbtn:false,
       }
   },
   components:{
@@ -26,6 +27,14 @@ export default {
       "nav-bar":Navbar,
       Footer,
       Calendar1
+  },
+  methods:{
+    changeBtn(){
+      this.loadbtn = true;
+      setTimeout(()=>{
+        this.loadbtn = false;
+      },3000)
+    }
   }
 }
 </script>
