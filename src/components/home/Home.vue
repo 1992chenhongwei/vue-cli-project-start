@@ -51,6 +51,7 @@ export default {
   methods:{
     changeBtn(){
       // this.loadbtn = true;
+      // 增加一句话确认是否可正常提交
       this.$store.commit("startloading");
       setTimeout(()=>{
         // this.loadbtn = false;
