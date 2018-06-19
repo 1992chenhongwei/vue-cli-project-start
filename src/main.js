@@ -9,12 +9,14 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import {store} from './store/store.js'
+import echarts from 'echarts'
 
 // 配置axios的默认路径，请求时无需加上这一部分
 axios.defaults.baseURL = 'http://localhost:8080'
 
 // 配置Vue原型，（在任何组件中都可以使用 $axios 来指向axios）
 Vue.prototype.$axios = axios
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 

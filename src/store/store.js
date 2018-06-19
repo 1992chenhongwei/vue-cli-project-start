@@ -16,13 +16,13 @@ export const store = new Vuex.Store({
   },
   mutations: {
     // 改变属性的状态
-      startloading(state){
+    startloading (state) {
       state.loading = ElementUI.Loading.service({
-        lock:true,
-        text:'正在拼命加载中',
-        spinner:'el-icon-loading',
-        background:'rgba(0,0,0,0.5)',
-        customClass:'loadingsize'
+        lock: true,
+        text: '正在拼命加载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0,0,0,0.5)',
+        customClass: 'loadingsize'
       })
     }
   },
