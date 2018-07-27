@@ -8,4 +8,3 @@
 'use strict'
 
 import './layout.css'
-import './css/font-awesome.min.css'
