@@ -9,7 +9,8 @@ Vue.use(ElementUI)
 export const store = new Vuex.Store({
   state: {
     // 设置属性
-    loading: Object
+    loading: Object,
+    defaultAside: {}
   },
   getters: {
     // 获取属性状态
@@ -24,6 +25,9 @@ export const store = new Vuex.Store({
         background: 'rgba(0,0,0,0.5)',
         customClass: 'loadingsize'
       })
+    },
+    setAside (state, data) {
+      state.defaultAside = data
     }
   },
   actions: {
