@@ -50,49 +50,49 @@ export default {
                 province: '北京',
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1510 弄',
-                zip: 200333
+                zip: '200301'
                 }, {
                 date: '2016-05-02',
                 status: '进行中',
                 province: '上海',
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1511 弄',
-                zip: 200333
+                zip: '200302'
                 }, {
                 date: '2016-05-03',
                 status: '失败',
                 province: '天津',
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1512 弄',
-                zip: 200333
+                zip: '200303'
                 }, {
                 date: '2016-05-04',
                 status: '进行中',
                 province: '深圳',
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1513 弄',
-                zip: 200333
+                zip: '200304'
                 }, {
                 date: '2016-05-05',
                 status: '已完成',
                 province: '广州',
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1514 弄',
-                zip: 200333
+                zip: '200305'
                 }, {
                 date: '2016-05-06',
                 status: '已完成',
                 province: '重庆',
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1515 弄',
-                zip: 200333
+                zip: '200306'
                 }, {
                 date: '2016-05-07',
                 status: '失败',
                 province: '香港',
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1516 弄',
-                zip: 200333
+                zip: '200307'
                 }]
         }
     },
@@ -187,7 +187,7 @@ export default {
         }
     },
     created(){
-        this.$store.commit("setAside",{defaultActive:'1-1-1',defaultOpen:['1','1-1']})
+        this.$store.commit("setAside",{defaultActive:'1-1',defaultOpen:['1']})
         this.tableData1 = this.tableData3
         this.tableData1.map((item,index)=>{
                 if(index+1>(this.currentPage-1)*this.pageSize && index+1<this.currentPage*this.pageSize+1){

@@ -23,6 +23,7 @@ const app = express()
 var goods = require("../data/goods.json")
 var ratings = require("../data/ratings.json")
 var seller = require("../data/seller.json")
+var progress = require("../data/progress.json")
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -66,6 +67,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
       app.get("/api/seller",(req,res) => {
         res.json(seller)
+      })
+      app.get("/api/progress11",(req,res) => {
+        res.json(progress)
       })
       app.post("/api/hello",(req,res) => {
         res.json(ratings)

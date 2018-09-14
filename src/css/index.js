@@ -8,3 +8,4 @@
 'use strict'
 
 import './layout.css'
+import './diag_d3.css'

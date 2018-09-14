@@ -5,7 +5,9 @@ import Router from 'vue-router'
 import Home from '../components/home/Home.vue'
 import Table from '../components/container/Table.vue'
 import Table1 from '../components/container/Table1.vue'
+import Progress from '../components/container/Progress.vue'
 import D3 from '../components/container/D3.vue'
+import D3Graph from '../components/container/D3Graph.vue'
 import Echarts from '../components/container/Echarts.vue'
 
 Vue.use(Router)
@@ -18,7 +20,9 @@ export default new Router({
       children: [
         {path: '/table', name: 'table', component: Table},
         {path: '/table1', name: 'table1', component: Table1},
+        {path: '/progress', name: 'progress', component: Progress},
         {path: '/d3_demo', name: 'd3_demo', component: D3},
+        {path: '/echarts_graph', name: 'echarts_graph', component: D3Graph},
         {path: '/echarts_demo', name: 'echarts_demo', component: Echarts}
         // {path: '*', redirect: '/table'}
       ]},

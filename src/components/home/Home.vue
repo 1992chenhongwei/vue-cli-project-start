@@ -4,7 +4,7 @@
       <Header/>
     </el-header>
     <el-container>
-      <el-aside style="width:220px">
+      <el-aside>
         <Aside :defaultActive="defaultActive" :defaultOpen="defaultOpen"/>
       </el-aside>
       <el-container>

@@ -1,5 +1,6 @@
+import * as d3 from 'd3'
+require('../d3/dagre-d3.js')
 require('../d3/d3.min.js')
-var d3 = require('../d3/dagre-d3.js')
 export const diagGraph = {
   // diag图数据操作
   state: [],
@@ -11,11 +12,10 @@ export const diagGraph = {
     this.state = state
     this.edg = edg
     this.createG()
-    console.log('create成功')
     this.renderG()
   },
   createG: function () {
-    this.g = new dagreD3.graphlib.Graph()
+    this.g = new window.dagreD3.graphlib.Graph()
       .setGraph({})
       .setDefaultEdgeLabel(function () { return {} })
   },
@@ -60,7 +60,7 @@ export const diagGraph = {
       let el = this.edg[i]
       if (el.start === this.statePoint || el.end === this.statePoint) {
         this.g.setEdge(el.start, el.end, {
-          style: 'stroke: #0fb2cc; fill: none;',
+          style: 'stroke: #0fb2cc; fill: none;line:3',
           arrowheadStyle: 'fill: #0fb2cc;stroke: #0fb2cc;',
           arrowhead: 'vee'
         })
@@ -72,37 +72,40 @@ export const diagGraph = {
     }
   },
   renderG: function () {
-    var render = new dagreD3.render()
+    var render = new window.dagreD3.render()
     var svg = d3.select('#svgCanvas')
-    console.log('进入render')
     svg.select('g').remove() // 删除以前的节点
-    var svgGroup = svg.append('g')
+    svg.append('g')
     var inner = svg.select('g')
 
     var zoom = d3.zoom().on('zoom', function () { // 放大
       inner.attr('transform', d3.event.transform)
     })
     svg.call(zoom)
-
     this.drawNode()
     this.drawEdg()
     render(d3.select('svg g'), this.g) // 渲染节点
-
     var max = svg._groups[0][0].clientWidth > svg._groups[0][0].clientHeight ? svg._groups[0][0].clientWidth : svg._groups[0][0].clientHeight
     var initialScale = max / 779
     var tWidth = (svg._groups[0][0].clientWidth - this.g.graph().width * initialScale) / 2
     var tHeight = (svg._groups[0][0].clientHeight - this.g.graph().height * initialScale) / 2
-
     svg.call(zoom.transform, d3.zoomIdentity.translate(tWidth, tHeight).scale(initialScale)) // 元素居中
   },
+  renderClick: function () {
+    var render = new window.dagreD3.render()
+    var svg = d3.select('#svgCanvas')
+    svg.append('g')
+    var inner = svg.select('g')
+    var zoom = d3.zoom().on('zoom', function () { // 放大
+      inner.attr('transform', d3.event.transform)
+    })
+    svg.call(zoom)
+    this.drawEdg()
+    render(d3.select('svg g'), this.g)
+  },
   changePoint: function (point) {
+    // console.log(point)
     this.statePoint = point * 1.0
-    this.renderG()
+    this.renderClick()
   }
 }
-// 暴露对象diagGraph
-// window.diagGraph = diagGraph
-// if (window.Vue) {
-//   window.Vue.use(diagGraph)
-// }
-// export { diagGraph }

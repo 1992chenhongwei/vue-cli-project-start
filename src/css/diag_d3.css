@@ -1,0 +1,60 @@
+.d3-graph g.type-suss>rect {
+    fill: #ddefd3;
+}
+.d3-graph .node text {
+    font-weight: 300;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+    font-size: 12px;
+    pointer-events: none;
+    text-anchor: middle;
+    fill: white;
+}
+.d3-graph .label g text tspan:last-child {
+    font-size: 10px;
+    margin-top: 5px;
+    dy: 1.5em;
+}
+.d3-graph .label g {
+    transform: translate(0, -13px);
+}
+.d3-graph .node rect {
+    fill: white;
+    stroke-width: 0px;
+    color: white;
+}
+.d3-graph .edgePath path {
+    stroke: rgb(78, 78, 78);
+    stroke-width: 1px;
+}
+.d3-graph g.type-init>rect {
+    fill: rgba(0, 91, 252, 0.4);
+}
+.d3-graph g.type-ready>rect {
+    fill: rgba(0, 91, 252, 0.6);
+}
+.d3-graph g.type-queue>rect {
+    fill: rgba(0, 91, 252, 0.8);
+}
+.d3-graph g.type-run>rect {
+    fill: rgba(0, 91, 252, 1);
+}
+.d3-graph g.type-suss>rect {
+    fill: #3EBB44;
+}
+.d3-graph g.type-fail>rect {
+    fill: #E93A3A;
+}
+.d3-graph g.type-freeze>rect {
+    fill: #f2f3f7;
+}
+.d3-graph .type-freeze text {
+    fill: #999999;
+}
+.d3-graph #myMenu{
+    position: absolute;
+    display: none;
+    width: 60px;
+    height: 60px;
+    padding-left: 5px;
+    background: #999999;
+}
