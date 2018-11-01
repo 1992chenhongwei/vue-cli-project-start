@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 require('../d3/dagre-d3.js')
-require('../d3/d3.min.js')
+// require('../d3/d3.min.js')
 export const diagGraph = {
   // diag图数据操作
   state: [],
@@ -94,13 +94,14 @@ export const diagGraph = {
   renderClick: function () {
     var render = new window.dagreD3.render()
     var svg = d3.select('#svgCanvas')
-    svg.append('g')
+    // svg.append('g')
     var inner = svg.select('g')
     var zoom = d3.zoom().on('zoom', function () { // 放大
       inner.attr('transform', d3.event.transform)
     })
     svg.call(zoom)
-    this.drawEdg()
+    // this.drawEdg()
+    this.drawNode()
     render(d3.select('svg g'), this.g)
   },
   changePoint: function (point) {

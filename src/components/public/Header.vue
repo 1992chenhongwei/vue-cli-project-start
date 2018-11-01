@@ -7,20 +7,17 @@
 </template>
 
 <script>
-import Header from "../public/Header.vue"
+import Header from "../public/Header.vue";
 export default {
-    data(){
-        return{
-
-        }
-    },
-    components:{
-        Header,
-    }
-}
+  data() {
+    return {};
+  },
+  components: {
+    Header
+  }
+};
 </script>
 
 <style scoped>
-
 </style>
 

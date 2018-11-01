@@ -55,41 +55,41 @@
 
 <script>
 export default {
-    data(){
-        return {
-            isCollapse: true
-      };
+  data() {
+    return {
+      isCollapse: true
+    };
+  },
+  props: {
+    defaultActive: {
+      default: "",
+      type: String
     },
-    props:{
-        defaultActive:{
-            default:'',
-            type:String
-        },
-        defaultOpen:{
-            default(){
-                return []
-            },
-            type:Array
-        }
-    },
-    methods:{
-        handleOpen(key, keyPath) {
-            console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-            console.log(key, keyPath);
-        }
+    defaultOpen: {
+      default() {
+        return [];
+      },
+      type: Array
     }
-}
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      // console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      // console.log(key, keyPath);
+    }
+  }
+};
 </script>
 
 <style scoped>
-    .el-menu{
-        text-align: left;
-        min-height: 600px;
-    }
-    .el-menu .el-menu-item{
-        padding-left: 0px;
-    }
+.el-menu {
+  text-align: left;
+  min-height: 600px;
+}
+.el-menu .el-menu-item {
+  padding-left: 0px;
+}
 </style>
 

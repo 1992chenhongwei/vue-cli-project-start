@@ -4,20 +4,18 @@
     </el-container>
 </template>
 
-<script>    
+<script>
 export default {
-  components:{
-
-  },
-  data(){
-      return{}
+  components: {},
+  data() {
+    return {};
   }
-}
+};
 </script>
 
 <style>
-  body > .el-container {
-    /* margin-bottom: 20px;
+body > .el-container {
+  /* margin-bottom: 20px;
     margin-top: 20px; */
-  }
+}
 </style>
