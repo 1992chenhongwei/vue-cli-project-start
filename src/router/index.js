@@ -9,6 +9,7 @@ import Progress from '../components/container/Progress.vue'
 import D3 from '../components/container/D3.vue'
 import D3Graph from '../components/container/D3Graph.vue'
 import Echarts from '../components/container/Echarts.vue'
+import Graph from '../components/graph/Graph.vue'
 
 Vue.use(Router)
 
@@ -26,6 +27,7 @@ export default new Router({
         {path: '/echarts_demo', name: 'echarts_demo', component: Echarts}
         // {path: '*', redirect: '/table'}
       ]},
+    {path: '/graph', name: 'graph', component: Graph},
     // 当用户输入的路径不存在时，利用redirect会跳转到主页
     {path: '*', redirect: '/'}
   ],

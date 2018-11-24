@@ -17,8 +17,10 @@
                 </template>
                 <div>
                     <label class="third-msg" v-for="item1 in item.third" :key="item1.third_name">
+                      <div class="message">
                         <el-progress type="circle" :percentage="returnPercent(item1.third_percent)" :color="returnColor(item.second_percent)"></el-progress>
                         <div style="third-name">{{item1.third_name}}</div>
+                      </div>
                     </label>
                     <!-- <el-row>
                         <el-col v-for="(item1,index) in item.third" :key="item1.third_name" :span="6" :offset="index > 0 ? 2 : 0">
@@ -73,10 +75,16 @@ export default {
         .get("/api/progress11")
         .then((res) => {
           this.progress = res.data.response;
+          this.$common.promise(res).then((suc)=>{
+            let a = suc.data.response
+            console.log(a)
+          }).catch((err)=>{
+            alert("返回数据处理失败："+err)
+          })
           // console.log('异步执行成功的打印')
         })
         .catch((err) => {
-          this.$common.httpError(err.response)
+          console.log(err.response)
         });
     }
   },
@@ -105,14 +113,26 @@ export default {
 }
 .third-msg {
   width: 18%;
+  height: 170px;
+  cursor: pointer;
   display: inline-block;
   text-align: center;
-  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-bottom: 5px;
   margin-left: 10px;
-  padding: 10px;
   box-sizing: border-box;
-  border: 1px solid #d4d4d4;
+}
+.third-msg .message{
+  position: absolute;
+  margin-top: 15px;
   border-radius: 10px;
-  box-shadow: 6px 6px 3px #cfcece;
+  transition: all 0.3s;
+  padding: 10px;
+  border: 1px solid #d4d4d4;
+  box-shadow: 3px 3px 3px #cfcece;
+}
+.third-msg .message:hover{
+  margin-top: 5px;
+  box-shadow: 8px 8px 3px #cfcece;
 }
 </style>

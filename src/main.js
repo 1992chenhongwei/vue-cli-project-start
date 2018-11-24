@@ -10,18 +10,30 @@ import router from './router'
 import axios from 'axios'
 import {store} from './store/store.js'
 import echarts from 'echarts'
-import * as d3 from 'd3'
+// import * as d3 from 'd3'
 import {diagGraph} from './util/diagGraph.js'
 import {common} from './util/common.js'
 
 // 配置axios的默认路径，请求时无需加上这一部分
-axios.defaults.baseURL = window.location.protocol + '//' + window.location.host
 // axios.defaults.baseURL = 'http://localhost:8080'
-
+axios.defaults.baseURL = window.location.protocol + '//' + window.location.host
+axios.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    // console.log(error)
+    ElementUI.Message({
+      message: '网络错误,请联系管理员',
+      type: 'error'
+    })
+    return Promise.reject(error)
+  }
+)
 // 配置Vue原型，（在任何组件中都可以使用 $axios 来指向axios）
 Vue.prototype.$axios = axios
 Vue.prototype.$echarts = echarts
-Vue.prototype.$d3 = d3
+// Vue.prototype.$d3 = d3
 Vue.prototype.$diagGraph = diagGraph
 Vue.prototype.$common = common
 
