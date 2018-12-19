@@ -74,10 +74,11 @@ export default {
       this.$axios
         .get("/api/progress11")
         .then((res) => {
-          this.progress = res.data.response;
+          console.log(res.data);
           this.$common.promise(res).then((suc)=>{
+            this.progress = res.data.response;
             let a = suc.data.response
-            console.log(a)
+            // console.log(a)
           }).catch((err)=>{
             alert("返回数据处理失败："+err)
           })

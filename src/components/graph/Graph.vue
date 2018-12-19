@@ -23,6 +23,15 @@
           <div>高　度：
             <el-input v-model="clickNode.height" @change="changeNode()" style="width:120px;"></el-input>
           </div>
+          <div>
+            <a id="downloadJson"><el-button type="success" size="mini" style="margin:10px;" @click="saveJson()">保存</el-button></a>
+          </div>
+          <div>
+            <input type="file" style="width:170px;" name="exportData" @change="fileChange($event)">
+          </div>
+          <!-- <div>
+            <el-button type="success" size="mini" @click="exportGraph()">生成图形</el-button>
+          </div> -->
         </div>
         <div id="menuDiv">
           <div class="menu" @click="changeAppendLineState()"><i class="el-icon-menu"></i> 连线</div>
@@ -38,6 +47,7 @@ export default {
     return {
       drageNode:{},
       clickNode:{},
+      clickLine:{},
       appendNode:{},
       allNode:[],
       appendLineState:false,
@@ -130,12 +140,12 @@ export default {
       this.clickNode = {}
       this.allNode.map((item,index)=>{
         if(item.nodeName == this.drageNode.nodeName){
-          item.cx = d3.event.x
-          item.cy = d3.event.y
+          item.cx = parseInt(d3.event.x)
+          item.cy = parseInt(d3.event.y)
           this.clickNode = item
         }
       })
-      if(d3.event.x>100){
+      // if(d3.event.x>100){
         this.allLine.map((item, index) => {
           if (this.drageNode.nodeName == item.startNode) {
               item.startX = this.drageNode.cx
@@ -147,7 +157,7 @@ export default {
         })
         this.changeNode()
         this.nodeClick(this.drageNode)
-      }
+      // }
     },
     drawNode(){
       //绘制节点
@@ -345,6 +355,17 @@ export default {
           return "url(#arrow"+d.startNode+"-"+d.endNode+")"
         })
         .on("click",(d)=>{
+          this.clickLine = d
+          //重置路径，箭头样式
+          this.nodeDrawArea.selectAll("path")
+              .attr('stroke', 'white')
+              .attr('fill', 'white')
+          this.defs.selectAll("marker")
+              .attr("fill", "white")
+              .attr('stroke', 'white')
+              .select('path')
+              .attr('fill', 'white')
+          //改变选中路径，箭头样式
           d3.select('.'+d.startNode+d.endNode)
             .attr('stroke', '#F59F85')
           d3.select('#arrow'+d.startNode+'-'+d.endNode)
@@ -352,14 +373,6 @@ export default {
             .attr('stroke', '#F59F85')
             .select('path')
             .attr('fill', '#F59F85')
-          //删除被选中的直线
-          // d3.select('.'+d.startNode+d.endNode).remove()
-          // _this.allLine.map((item,index)=>{
-          //   if(item.startNode == d.startNode && item.endNode == d.endNode){
-          //     console.log(index,item)
-          //     _this.allLine.splice(index,1)
-          //   }
-          // })
         })
     },
     changeNode(){
@@ -369,32 +382,100 @@ export default {
         this.drawLine()
         this.drawNode()
       }
-    }
+    },
+    //保存节点及节点关系数据
+    saveJson(){
+      let blob = new Blob([JSON.stringify({allNode:this.allNode,allLine:this.allLine})], {
+        type: "text/plain;charset=utf-8"
+        });
+      let a = document.getElementById("downloadJson");
+      a.href = window.URL.createObjectURL(blob);
+      a.download = "download.json";
+    },
+    fileChange(event){
+      if(event.target.files.length == 1){
+        let file = event.target.files[0]
+        let msg = ''
+        let _this = this
+        let reader = new FileReader()
+        reader.readAsText(file)
+        reader.onload = function(event){
+          _this.allNode = JSON.parse(event.target.result).allNode
+          _this.allLine = JSON.parse(event.target.result).allLine
+          _this.changeNode()
+        }
+      }
+    },
   },
   mounted() {
+    //模板图形拖动
     d3.selectAll(".legendDiv rect")
       .call(this.templateDrage)
+    //定义图形生成区域
     this.nodeArea = d3.select(".nodeArea")
     this.nodeDrawArea = d3.select(".nodeArea")
                           .append("g")
     let element = document.getElementsByClassName('nodeArea')[0]
     let menuDiv = document.getElementById('menuDiv')
+    //点击非节点及路径，重置节点路径样式
     element.addEventListener("click",(e)=>{
         if(e.target.tagName !== 'rect'&& e.target.tagName !== 'path'&& e.target.tagName !== 'text'){
           this.changeNode()
           this.clickNode = {}
+          this.clickLine = {}
         }
       })
     document.addEventListener("click",(e)=>{
       menuDiv.style.display = "none"
     })
+    //在nodeArea区域右键菜单
     element.addEventListener("contextmenu",(e)=>{
       e.preventDefault()
       menuDiv.style.top = e.pageY + "px"
       menuDiv.style.left = e.pageX + "px"
       menuDiv.style.display = "block"
     })
+    //keyup事件监听
+    document.onkeyup = (e)=>{
+      //当按下esc键时，取消绘制路径
+      if(e.keyCode == 27){
+        this.appendLineState = false
+        this.appendLine = []
+      }
+      //当按下delete键时，执行删除
+      if(e.keyCode == 46){
+        //存在被选中的节点 删除被选中的节点,及相关路径
+        if(this.clickNode.nodeName){
+          this.allNode.map((item,index)=>{
+            if(item.nodeName == this.clickNode.nodeName){
+              d3.select('.'+this.clickNode.nodeName).remove()
+              this.allNode.splice(index,1)
+            }
+          })
+          let index = 0
+          while (index < this.allLine.length) {
+            if(this.allLine[index].startNode == this.clickNode.nodeName || this.allLine[index].endNode == this.clickNode.nodeName){
+              d3.select('.'+this.allLine[index].startNode+this.allLine[index].endNode).remove()
+              this.allLine.splice(index,1)
+            }else{
+              index++
+            }
+          }
+        }
+        //存在被选中路径 删除被选中的路径
+        if(this.clickLine.startNode){
+          this.allLine.map((item,index)=>{
+            if(item.startNode == this.clickLine.startNode && item.endNode == this.clickLine.endNode){
+              d3.select('.'+this.clickLine.startNode+this.clickLine.endNode).remove()
+              this.allLine.splice(index,1)
+            }
+          })
+        }
+      }
+    }
+    //定义箭头
     this.defs = this.nodeArea.append("defs")
+    //增加缩放功能
     let inner = this.nodeArea.select('g')
     let zoom = d3.zoom().on('zoom', function () { // 放大
         inner.attr('transform', d3.event.transform)
@@ -403,6 +484,9 @@ export default {
   },
   created() {
     
+  },
+  beforeDestroy(){
+    document.onkeyup = null
   }
 };
 </script>
@@ -418,7 +502,7 @@ export default {
   padding-left: 5px;
   padding-top: 5px;
   width: 200px;
-  height: 200px;
+  /* height: 200px; */
   top: 0;
   right: 0;
   background: white;

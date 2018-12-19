@@ -74,6 +74,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       app.post("/api/hello",(req,res) => {
         res.json(ratings)
       })
+      //跨域的返回接口
+      app.get("/api/hello", function (req, res) {
+        var callbackName = req.query.callback; // myFunction
+        res.send(callbackName + "(" + JSON.stringify(ratings) + ");");
+        // myFunction({'message': 'hello world from JSONP!'})
+        // 一个带参数的执行函数
+      })
     }
   },
   plugins: [
