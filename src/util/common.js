@@ -5,7 +5,7 @@
  * @author Chen Hongwei
  *
  * Created at     : 2018-09-27 16:58:04
- * Last modified  : 2018-12-18 14:06:15
+ * Last modified  : 2018-12-22 18:22:40
  */
 
 export const common = {
@@ -77,6 +77,19 @@ export const common = {
     }
     // 最后返回这个新数组
     return newList
+  },
+  // 利用filter实现数组中匹配单个字符串
+  filterStr: function (str, arr) {
+    return arr.filter((item, index) => {
+      let strIn = false
+      for (let key in item) {
+        if (item[key].toLowerCase().match(str.toLowerCase())) {
+          strIn = true
+          break
+        }
+      }
+      return strIn
+    })
   },
   // 数组中匹配多个字符串
   searchMoreStr: function (str, table) {

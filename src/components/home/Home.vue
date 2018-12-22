@@ -42,7 +42,14 @@ export default {
   },
   methods: {},
   created() {
-    // console.log(this.$d3)
+    let arr = [
+      {name:'张三',Ename:'Tom'},
+      {name:'李四',Ename:'ToM'},
+      {name:'王一',Ename:'junn'},
+      {name:'王二',Ename:'tom'},
+    ]
+    let a = this.$common.filterStr('tom' , arr)
+    console.log(a)
   }
 };
 </script>

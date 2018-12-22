@@ -436,7 +436,7 @@ export default {
       menuDiv.style.display = "block"
     })
     //keyup事件监听
-    document.onkeyup = (e)=>{
+    document.onkeydown = (e)=>{
       //当按下esc键时，取消绘制路径
       if(e.keyCode == 27){
         this.appendLineState = false
@@ -444,11 +444,12 @@ export default {
       }
       //当按下delete键时，执行删除
       if(e.keyCode == 46){
-        //存在被选中的节点 删除被选中的节点,及相关路径
+        //存在被选中的节点 删除被选中的节点,文本,及相关路径
         if(this.clickNode.nodeName){
           this.allNode.map((item,index)=>{
             if(item.nodeName == this.clickNode.nodeName){
               d3.select('.'+this.clickNode.nodeName).remove()
+              d3.select('.text'+this.clickNode.nodeName).remove()
               this.allNode.splice(index,1)
             }
           })
