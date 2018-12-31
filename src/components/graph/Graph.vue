@@ -279,8 +279,8 @@ export default {
     },
     drawLine(){
       let _this = this
-      this.nodeDrawArea.selectAll("path").remove()
-      this.nodeDrawArea.selectAll("path")
+      // this.nodeDrawArea.selectAll("path").remove()
+      // this.nodeDrawArea.selectAll("path")
       let arrow_path = "M2,2 L10,6 L2,10 L6,6 L2,2";
       //绘制箭头
       this.defs.selectAll("marker").remove()
@@ -359,18 +359,14 @@ export default {
           //重置路径，箭头样式
           this.nodeDrawArea.selectAll("path")
               .attr('stroke', 'white')
-              .attr('fill', 'white')
+              // .attr('fill', 'white')
           this.defs.selectAll("marker")
-              .attr("fill", "white")
-              .attr('stroke', 'white')
               .select('path')
               .attr('fill', 'white')
           //改变选中路径，箭头样式
           d3.select('.'+d.startNode+d.endNode)
             .attr('stroke', '#F59F85')
           d3.select('#arrow'+d.startNode+'-'+d.endNode)
-            .attr('fill', '#F59F85')
-            .attr('stroke', '#F59F85')
             .select('path')
             .attr('fill', '#F59F85')
         })
@@ -382,6 +378,48 @@ export default {
         this.drawLine()
         this.drawNode()
       }
+    },
+    //绘制节点间路径时的临时路径
+    drawLine2(){
+      let _this = this
+      d3.select(".nodeArea")
+      .on('mousemove',()=>{
+        // console.log(d3.event.x,d3.event.y)
+        if(this.appendLine.length ==1 && this.appendLineState == true){
+          this.nodeDrawArea.selectAll('.temPath').remove()
+          this.defs.select("#arrowtemPath").remove()
+          this.defs
+            .append("marker")
+            .attr("id", "arrowtemPath")
+            .attr("markerUnits", "strokeWidth")
+            .attr("markerWidth", "12")
+            .attr("markerHeight", "12")
+            .attr("viewBox", "0 0 12 12")
+            .attr("refX", "6")
+            .attr("refY", "6")
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M2,2 L10,6 L2,10 L6,6 L2,2")
+            .attr("fill", "white")
+          this.nodeDrawArea
+            .append('path')
+            .attr("class", 'temPath')
+            .attr('stroke', 'white')
+            .attr('stroke-width', '2')
+            .attr('width', '20')
+            .attr('fill', 'white')
+            //设置路径信息
+            .attr('d', function () {
+                return _this.lineGenerator([
+                            [_this.appendLine[0][0], _this.appendLine[0][1]],
+                            [d3.event.x, d3.event.y-4]
+                        ])
+            })
+            .attr("marker-end", (d)=>{
+              return "url(#arrowtemPath)"
+            })
+        }
+      })
     },
     //保存节点及节点关系数据
     saveJson(){
@@ -412,6 +450,7 @@ export default {
     d3.selectAll(".legendDiv rect")
       .call(this.templateDrage)
     //定义图形生成区域
+    this.drawLine2()
     this.nodeArea = d3.select(".nodeArea")
     this.nodeDrawArea = d3.select(".nodeArea")
                           .append("g")
@@ -477,11 +516,11 @@ export default {
     //定义箭头
     this.defs = this.nodeArea.append("defs")
     //增加缩放功能
-    let inner = this.nodeArea.select('g')
-    let zoom = d3.zoom().on('zoom', function () { // 放大
-        inner.attr('transform', d3.event.transform)
-    })
-    this.nodeArea.call(zoom)
+    // let inner = this.nodeArea.select('g')
+    // let zoom = d3.zoom().on('zoom', function () { // 放大
+    //     inner.attr('transform', d3.event.transform)
+    // })
+    // this.nodeArea.call(zoom)
   },
   created() {
     
