@@ -5,7 +5,7 @@
  * @author Chen Hongwei
  *
  * Created at     : 2018-09-27 16:58:04
- * Last modified  : 2018-12-22 18:22:40
+ * Last modified  : 2019-01-02 15:26:08
  */
 
 export const common = {
@@ -83,7 +83,8 @@ export const common = {
     return arr.filter((item, index) => {
       let strIn = false
       for (let key in item) {
-        if (item[key].toLowerCase().match(str.toLowerCase())) {
+        //强制转换匹配项，被匹配项为字符串
+        if (String(item[key]).toLowerCase().match(String(str).toLowerCase())) {
           strIn = true
           break
         }
@@ -95,9 +96,10 @@ export const common = {
   searchMoreStr: function (str, table) {
     let searchList = str.split('&')
     let newList = []
+    //使用两种方法 filterStr()、searchStr()实现字符串匹配，单独，混合均可使用
     searchList.map((item, index) => {
       if (index === 0) {
-        newList = this.searchStr(item, table)
+        newList = this.filterStr(item, table)
       } else {
         newList = this.searchStr(item, newList)
       }

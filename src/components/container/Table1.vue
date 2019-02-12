@@ -23,21 +23,23 @@ export default {
     };
   },
   mounted() {
-    // var ws = new WebSocket("wss://echo.websocket.org");
-    // ws.onopen = function(evt) {
-    //     console.log("Connection open ...");
-    //     ws.send("Hello Chenhongwei!");
-    // };
-    // ws.onmessage = function(evt) {
-    //     console.log( "Received Message: " + evt.data);
-    //     ws.close();
-    // };
-    // ws.onerror = function(evt) {
-    //     console.log("Connection error.");
-    // };
-    // ws.onclose = function(evt) {
-    //     console.log("Connection closed.");
-    // };
+    var ws = new WebSocket("wss://echo.websocket.org");
+    ws.onopen = function(evt) {
+        console.log("Connection open ...");
+        ws.send(1);
+    };
+    ws.onmessage = function(evt) {
+        console.log( "Received Message: " + evt);
+        setTimeout(() => {
+          ws.send(parseInt(evt.data)+1);
+        }, 2000);
+    };
+    ws.onerror = function(evt) {
+        console.log("Connection error.");
+    };
+    ws.onclose = function(evt) {
+        console.log("Connection closed.");
+    };
   },
   created() {
     this.$store.commit("setAside", {

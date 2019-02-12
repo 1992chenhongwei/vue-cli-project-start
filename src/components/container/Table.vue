@@ -13,8 +13,10 @@
             :data="tableData"
             stripe
             style="width:100%"
+            @sort-change="sortbyDateTime"
+            @row-click="rowClick"
             border>
-                <el-table-column fixed prop="date" label="日期" width="120"></el-table-column>
+                <el-table-column fixed prop="date" label="日期" width="120" sortable='custom'></el-table-column>
                 <el-table-column prop="status" label="状态" width="120"></el-table-column>
                 <el-table-column prop="province" label="省份" width="120"></el-table-column>
                 <el-table-column prop="city" label="市区" width="120"></el-table-column>
@@ -109,6 +111,23 @@ export default {
     total() {
       let total = this.tableData1.length;
       return total;
+    },
+    sortbyDateTime(msg){
+      // console.log(msg.column, msg.prop, msg.order)
+      this.tableData1 = this.tableData3
+      this.tableData1.sort((a,b)=>{
+        if (msg.order == 'ascending') {
+          return a.date.localeCompare(b.date, 'zh-CN')
+        } else if(msg.order == 'descending'){
+          return b.date.localeCompare(a.date, 'zh-CN')
+        }else{
+          return 0
+        }
+      })
+      this.handleCurrentChange(this.currentPage)
+    },
+    rowClick(row, event, column){
+      // console.log(row, event, column)
     },
     handleSizeChange(val) {
       this.tableData = [];

@@ -110,7 +110,24 @@ export default {
         .call(function () {
           //判断拖拽目的区域是否需要添加被拖拽的元素
           if (d3.event.x >= 100) {
-            _this.appendNode = {nodeName:'node'+d3.event.x+d3.event.y,nodeLabel:'',cx:d3.event.x,cy:d3.event.y,width:80,height:30,fill:'#409EFF',stroke:'#409EFF'}
+            let translateX = 0
+            let translateY = 0
+            let scale = 1
+            if(_this.nodeArea.select('g').attr("transform") != null){
+              translateX = _this.nodeArea.select('g').attr("transform").split(',')[0].substring(10)
+              translateY = _this.nodeArea.select('g').attr("transform").split(',')[1].split(')')[0]
+              scale = _this.nodeArea.select('g').attr("transform").split(',')[1].split(')')[1].substring(7)
+            }
+            _this.appendNode = {
+              nodeName:'node'+d3.event.x+d3.event.y,
+              nodeLabel:'',
+              cx:(d3.event.x-translateX)/scale,
+              cy:(d3.event.y-translateY)/scale,
+              width:80,
+              height:30,
+              fill:'#409EFF',
+              stroke:'#409EFF'
+            }
             if (_this.appendNodeState == false) {
               _this.allNode.push(_this.appendNode)
               _this.drawNode()
@@ -216,6 +233,8 @@ export default {
           .attr("y", (d)=>{
               return d.cy-d.height/2+20;
           })
+          // .attr("font-size",24)
+          .attr('fill','red')
           .text((d)=>{
             return d.nodeLabel;
           })
@@ -342,8 +361,8 @@ export default {
           })
         .attr('stroke', 'white')
         .attr('stroke-width', '2')
-        .attr('width', '20')
-        .attr('fill', 'white')
+        // .attr('width', '20')
+        // .attr('fill', 'white')
         //设置路径信息
         .attr('d', function (d) {
             return _this.lineGenerator([
@@ -410,9 +429,17 @@ export default {
             .attr('fill', 'white')
             //设置路径信息
             .attr('d', function () {
+              let translateX = 0
+              let translateY = 0
+              let scale = 1
+              if(_this.nodeArea.select('g').attr("transform") != null){
+                translateX = _this.nodeArea.select('g').attr("transform").split(',')[0].substring(10)
+                translateY = _this.nodeArea.select('g').attr("transform").split(',')[1].split(')')[0]
+                scale = _this.nodeArea.select('g').attr("transform").split(',')[1].split(')')[1].substring(7)
+              }
                 return _this.lineGenerator([
                             [_this.appendLine[0][0], _this.appendLine[0][1]],
-                            [d3.event.x, d3.event.y-4]
+                            [(d3.event.x-translateX)/scale, (d3.event.y-4-translateY)/scale]
                         ])
             })
             .attr("marker-end", (d)=>{
@@ -516,11 +543,11 @@ export default {
     //定义箭头
     this.defs = this.nodeArea.append("defs")
     //增加缩放功能
-    // let inner = this.nodeArea.select('g')
-    // let zoom = d3.zoom().on('zoom', function () { // 放大
-    //     inner.attr('transform', d3.event.transform)
-    // })
-    // this.nodeArea.call(zoom)
+    let inner = this.nodeArea.select('g')
+    let zoom = d3.zoom().on('zoom', function () { // 放大
+        inner.attr('transform', d3.event.transform)
+    })
+    this.nodeArea.call(zoom)
   },
   created() {
     
