@@ -11,6 +11,7 @@
                 </div>
             </div>
             <el-date-picker v-model="value1" type="datetime" placeholder="选择日期时间"></el-date-picker>
+            <el-button type="primary" @click="submitRepeat()">重复提交，保留最后一次请求</el-button>
         </el-main>
     </el-container>
 </template>
@@ -19,27 +20,56 @@
 export default {
   data() {
     return {
-      value1: ""
+      value1: "",
+      cancel:null
     };
   },
+  methods:{
+    submitRepeat(){
+      // 如果存在上一次请求，则取消上一次请求
+      if(this.cancel){
+          this.cancel();
+      }
+
+      // 定义CancelToken，它是axios的一个属性，且是一个构造函数
+      let CancelToken = this.$axios.CancelToken;
+
+      // 使用axios的get方法获取请求结果，在请求时需要传入cancelToken参数，
+      // 实例化一个CancelToken，实例化后会生成一个类似于id的请求令牌，将它赋值给全局的cancel变量。
+      this.$axios.get('/request/overtime', {
+        cancelToken: new CancelToken((c) => {
+            this.cancel = c;
+        })
+      }).then((res) => {
+        // 将请求的结果赋值给personData全局变量，用于展示搜索结果
+        console.log(res.data);
+        
+      }).catch((err)=>{
+        // console.log(err);
+      })
+    },
+    websocketMethod(){
+      var ws = new WebSocket("wss://echo.websocket.org");
+      ws.onopen = function(evt) {
+          console.log("Connection open ...");
+          ws.send(1);
+      };
+      ws.onmessage = function(evt) {
+          console.log( "Received Message: " + evt);
+          setTimeout(() => {
+            ws.send(parseInt(evt.data)+1);
+          }, 2000);
+      };
+      ws.onerror = function(evt) {
+          console.log("Connection error.");
+      };
+      ws.onclose = function(evt) {
+          console.log("Connection closed.");
+      };
+    }
+  },
   mounted() {
-    var ws = new WebSocket("wss://echo.websocket.org");
-    ws.onopen = function(evt) {
-        console.log("Connection open ...");
-        ws.send(1);
-    };
-    ws.onmessage = function(evt) {
-        console.log( "Received Message: " + evt);
-        setTimeout(() => {
-          ws.send(parseInt(evt.data)+1);
-        }, 2000);
-    };
-    ws.onerror = function(evt) {
-        console.log("Connection error.");
-    };
-    ws.onclose = function(evt) {
-        console.log("Connection closed.");
-    };
+    // this.websocketMethod()
   },
   created() {
     this.$store.commit("setAside", {

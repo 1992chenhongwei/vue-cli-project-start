@@ -60,6 +60,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       app.get("/api/goods",(req,res) => {
         res.json(goods)
       })
+      //接口返回数据较慢
+      app.get("/request/overtime", (req, res) => {
+        setTimeout(() => {
+          res.json(goods)
+        }, 5000);
+      })
 
       app.get("/api/ratings",(req,res) => {
         res.json(ratings)
@@ -74,6 +80,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       app.post("/api/hello",(req,res) => {
         res.json(ratings)
       })
+      
       //跨域的返回接口
       app.get("/api/hello", function (req, res) {
         var callbackName = req.query.callback; // myFunction
