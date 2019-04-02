@@ -12,17 +12,26 @@
             </div>
             <el-date-picker v-model="value1" type="datetime" placeholder="选择日期时间"></el-date-picker>
             <el-button type="primary" @click="submitRepeat()">重复提交，保留最后一次请求</el-button>
+            <Myinput :type="color" v-model="data222"></Myinput>
+            <button @click="color = 'blue'">点击改变hover颜色</button>
+            <div>这是输入框中的值：{{data222}}</div>
         </el-main>
     </el-container>
 </template>
 
 <script>
+import Myinput from './Myinput.vue'
 export default {
   data() {
     return {
       value1: "",
-      cancel:null
+      cancel:null,
+      data222:'',
+      color:'red'
     };
+  },
+  components:{
+    Myinput,
   },
   methods:{
     submitRepeat(){
