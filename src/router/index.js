@@ -9,6 +9,7 @@ import Progress from '../components/container/Progress.vue'
 import D3 from '../components/container/D3.vue'
 import D3Graph from '../components/container/D3Graph.vue'
 import Echarts from '../components/container/Echarts.vue'
+import Websocket from '../components/container/Websocket.vue'
 import Graph from '../components/graph/Graph.vue'
 
 Vue.use(Router)
@@ -24,6 +25,7 @@ export default new Router({
         {path: '/progress', name: 'progress', component: Progress},
         {path: '/d3_demo', name: 'd3_demo', component: D3},
         {path: '/echarts_graph', name: 'echarts_graph', component: D3Graph},
+        { path: '/websocket', name: 'websocket', component: Websocket},
         {path: '/echarts_demo', name: 'echarts_demo', component: Echarts}
         // {path: '*', redirect: '/table'}
       ]},
