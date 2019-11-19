@@ -13,8 +13,8 @@ import echarts from 'echarts'
 // import * as d3 from 'd3'
 import {diagGraph} from './util/diagGraph.js'
 import { common } from './util/common.js'
-import VueSocketio from 'vue-socket.io'
-// import socketio from 'socket.io-client'
+// import VueSocketio from 'vue-socket.io'
+import socketio from 'socket.io-client'
 
 // 配置axios的默认路径，请求时无需加上这一部分
 // axios.defaults.baseURL = 'http://localhost:8080'
@@ -42,7 +42,7 @@ Vue.prototype.$common = common
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
-Vue.use(new VueSocketio({debug: true, connection: 'ws://' + window.location.host}))
+// Vue.use(new socketio({debug: true, connection: 'ws://' + window.location.host}))
 
 /* eslint-disable no-new */
 new Vue({
