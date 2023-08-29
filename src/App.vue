@@ -15,7 +15,7 @@ export default {
 
 <style>
 body > .el-container {
-  /* margin-bottom: 20px;
-    margin-top: 20px; */
+  margin-bottom: 20px;
+    margin-top: 20px;
 }
 </style>
